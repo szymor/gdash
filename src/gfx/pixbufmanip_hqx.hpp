@@ -65,9 +65,9 @@ inline guint32 RGBtoYUV(guint32 c) {
 inline int Diff(guint32 w1, guint32 w2) {
     guint32 YUV1 = RGBtoYUV(w1);
     guint32 YUV2 = RGBtoYUV(w2);
-    return (abs((YUV1 & Ymask) - (YUV2 & Ymask)) > trY)
-           || (abs((YUV1 & Umask) - (YUV2 & Umask)) > trU)
-           || (abs((YUV1 & Vmask) - (YUV2 & Vmask)) > trV);
+    return (abs((int)((YUV1 & Ymask) - (YUV2 & Ymask))) > trY)
+           || (abs((int)((YUV1 & Umask) - (YUV2 & Umask))) > trU)
+           || (abs((int)((YUV1 & Vmask) - (YUV2 & Vmask))) > trV);
 }
 
 /* Interpolate functions */
