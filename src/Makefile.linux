@@ -1,0 +1,228 @@
+.PHONY: all clean
+
+PROJECT=gdash
+
+INC_BASE = \
+	misc/printf.hpp \
+	misc/smartptr.hpp \
+	misc/autogfreeptr.hpp \
+	cave/cavetypes.hpp \
+	cave/elementproperties.hpp \
+	cave/helper/namevaluepair.hpp \
+	cave/helper/reflective.hpp \
+	cave/helper/adoptingcontainer.hpp \
+	cave/helper/cavemap.hpp \
+	cave/helper/cavehighscore.hpp \
+	cave/colors.hpp \
+	cave/cavebase.hpp \
+	cave/cavestored.hpp \
+	cave/helper/caverandom.hpp \
+	cave/helper/cavesound.hpp \
+	cave/object/caveobjectfill.hpp \
+	cave/object/caveobjectboundaryfill.hpp \
+	cave/object/caveobjectcopypaste.hpp \
+	cave/object/caveobjectfillrect.hpp \
+	cave/object/caveobjectfloodfill.hpp \
+	cave/object/caveobject.hpp \
+	cave/object/caveobjectrectangular.hpp \
+	cave/object/caveobjectjoin.hpp \
+	cave/object/caveobjectline.hpp \
+	cave/object/caveobjectmaze.hpp \
+	cave/object/caveobjectpoint.hpp \
+	cave/object/caveobjectrandomfill.hpp \
+	cave/object/caveobjectraster.hpp \
+	cave/object/caveobjectrectangle.hpp \
+	cave/caverendered.hpp \
+	cave/particle.hpp \
+	cave/helper/cavereplay.hpp \
+	cave/caveset.hpp \
+	fileops/bdcffhelper.hpp \
+	fileops/bdcffload.hpp \
+	fileops/bdcffsave.hpp \
+	fileops/c64import.hpp \
+	fileops/brcimport.hpp \
+	fileops/binaryimport.hpp \
+	fileops/loadfile.hpp \
+	fileops/highscore.hpp \
+	cave/gamecontrol.hpp \
+	settings.hpp \
+	misc/util.hpp \
+	misc/logger.hpp \
+	misc/about.hpp \
+	misc/helptext.hpp \
+	gfx/pixbuf.hpp \
+	gfx/pixmapstorage.hpp \
+	gfx/screen.hpp \
+	gfx/pixbuffactory.hpp \
+	gfx/pixbufmanip.hpp \
+	gfx/pixbufmanip_hqx.hpp \
+	gfx/cellrenderer.hpp \
+	gfx/fontmanager.hpp \
+	cave/gamerender.hpp \
+	cave/titleanimation.hpp \
+	framework/app.hpp \
+	framework/activity.hpp \
+	framework/titlescreenactivity.hpp \
+	framework/showtextactivity.hpp \
+	framework/messageactivity.hpp \
+	framework/gameactivity.hpp \
+	framework/selectfileactivity.hpp \
+	framework/inputtextactivity.hpp \
+	framework/askyesnoactivity.hpp \
+	framework/settingsactivity.hpp \
+	framework/thememanager.hpp \
+	framework/replaymenuactivity.hpp \
+	framework/replaysaveractivity.hpp \
+	framework/commands.hpp \
+	input/joystick.hpp \
+	input/gameinputhandler.hpp \
+	sound/sound.hpp
+
+SRC_BASE = \
+	misc/printf.cpp \
+	cave/colors.cpp \
+	cave/cavetypes.cpp \
+	cave/elementproperties.cpp \
+	cave/helper/cavereplay.cpp \
+	cave/caverendered.cpp \
+	cave/particle.cpp \
+	cave/caverenderedengine.cpp \
+	cave/helper/caverandom.cpp \
+	cave/helper/cavesound.cpp \
+	cave/helper/cavehighscore.cpp \
+	cave/cavebase.cpp \
+	cave/cavestored.cpp \
+	cave/object/caveobject.cpp \
+	cave/object/caveobjectrectangular.cpp \
+	cave/object/caveobjectfill.cpp \
+	cave/object/caveobjectboundaryfill.cpp \
+	cave/object/caveobjectcopypaste.cpp \
+	cave/object/caveobjectfillrect.cpp \
+	cave/object/caveobjectfloodfill.cpp \
+	cave/object/caveobjectjoin.cpp \
+	cave/object/caveobjectline.cpp \
+	cave/object/caveobjectmaze.cpp \
+	cave/object/caveobjectpoint.cpp \
+	cave/object/caveobjectrandomfill.cpp \
+	cave/object/caveobjectraster.cpp \
+	cave/object/caveobjectrectangle.cpp \
+	cave/caveset.cpp \
+	fileops/bdcffhelper.cpp \
+	fileops/bdcffload.cpp \
+	fileops/bdcffsave.cpp \
+	fileops/c64import.cpp \
+	fileops/brcimport.cpp \
+	fileops/binaryimport.cpp \
+	fileops/loadfile.cpp \
+	fileops/highscore.cpp \
+	cave/gamecontrol.cpp \
+	settings.cpp \
+	misc/util.cpp \
+	misc/logger.cpp \
+	misc/about.cpp \
+	misc/helptext.cpp \
+	gfx/pixbuf.cpp \
+	gfx/screen.cpp \
+	gfx/pixbuffactory.cpp \
+	gfx/pixbufmanip.cpp \
+	gfx/pixbufmanip_hq2x.cpp \
+	gfx/pixbufmanip_hq3x.cpp \
+	gfx/pixbufmanip_hq4x.cpp \
+	gfx/cellrenderer.cpp \
+	gfx/fontmanager.cpp \
+	cave/gamerender.cpp \
+	cave/titleanimation.cpp \
+	framework/app.cpp \
+	framework/activity.cpp \
+	framework/titlescreenactivity.cpp \
+	framework/showtextactivity.cpp \
+	framework/messageactivity.cpp \
+	framework/gameactivity.cpp \
+	framework/selectfileactivity.cpp \
+	framework/inputtextactivity.cpp \
+	framework/askyesnoactivity.cpp \
+	framework/settingsactivity.cpp \
+	framework/thememanager.cpp \
+	framework/replaymenuactivity.cpp \
+	framework/replaysaveractivity.cpp \
+	framework/commands.cpp \
+	input/joystick.cpp \
+	input/gameinputhandler.cpp \
+	sound/sound.cpp \
+	mainwindow.cpp \
+	main.cpp
+
+SRC_GTK = \
+	gtk/gtkpixbuf.cpp \
+	gtk/gtkpixbuffactory.cpp \
+	gtk/gtkscreen.cpp \
+	gtk/gtkui.cpp \
+	gtk/gtkuisettings.cpp \
+	gtk/gtkgameinputhandler.cpp \
+	misc/helphtml.cpp \
+	editor/editorwidgets.cpp \
+	editor/editorautowidgets.cpp \
+	editor/editorcellrenderer.cpp \
+	editor/exporthtml.cpp \
+	editor/exportcrli.cpp \
+	editor/editor.cpp \
+	gtk/gtkapp.cpp \
+	gtk/gtkmainwindow.cpp
+
+GTK_INC = \
+	gtk/gtkpixbuf.hpp \
+	gtk/gtkpixbuffactory.hpp \
+	gtk/gtkscreen.hpp \
+	gtk/gtkui.hpp \
+	gtk/gtkuisettings.hpp \
+	gtk/gtkgameinputhandler.hpp \
+	misc/helphtml.hpp \
+	editor/editorwidgets.hpp \
+	editor/editorautowidgets.hpp \
+	editor/editorcellrenderer.hpp \
+	editor/exporthtml.hpp \
+	editor/exportcrli.hpp \
+	editor/editor.hpp \
+	gtk/gtkapp.hpp \
+	gtk/gtkmainwindow.hpp \
+	mainwindow.hpp
+
+SRC_SDL = \
+	framework/shadermanager.cpp \
+	framework/volumeactivity.cpp \
+	sdl/sdlpixbuf.cpp \
+	sdl/sdlabstractscreen.cpp \
+	sdl/sdlscreen.cpp \
+	sdl/sdlpixbuffactory.cpp \
+	sdl/ogl.cpp \
+	sdl/sdlgameinputhandler.cpp \
+	sdl/sdlmainwindow.cpp \
+	sdl/IMG_savepng.c
+
+INC_SDL = \
+	framework/shadermanager.hpp \
+	framework/volumeactivity.hpp \
+	sdl/sdlpixbuf.hpp \
+	sdl/sdlabstractscreen.hpp \
+	sdl/sdlscreen.hpp \
+	sdl/sdlpixbuffactory.hpp \
+	sdl/ogl.hpp \
+	sdl/sdlgameinputhandler.hpp \
+	sdl/sdlmainwindow.hpp \
+	sdl/IMG_savepng.h
+
+INC=$(INC_BASE) $(INC_GTK) $(INC_SDL) config.h
+SRC=$(SRC_BASE) $(SRC_GTK) $(SRC_SDL)
+
+datadir = /usr/local/share
+localedir = $(datadir)/locale
+pkgdatadir = $(datadir)/gdash
+DEFS = -DLOCALEDIR=\"$(localedir)\" -DPKGDATADIR=\"$(pkgdatadir)\"
+
+all: $(PROJECT)
+
+$(PROJECT): $(INC) $(SRC)
+	g++ -o $(PROJECT) $(addprefix -I,$(dir $(INC))) -I../include $(DEFS) $(SRC) `pkg-config --cflags --libs gtk+-2.0 glib-2.0 sdl SDL_image SDL_mixer libpng gl`
+
+clean:
+	rm -rf gdash
