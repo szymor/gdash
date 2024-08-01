@@ -183,6 +183,7 @@ static void run_the_app(App &the_app, NextAction &na) {
                     }
                     break;
                 case SDL_KEYUP:
+					// TODO: refactor to make it not miss key presses
                     the_app.gameinput->keyrelease(ev.key.keysym.sym);
                     break;
                 case SDL_VIDEOEXPOSE:

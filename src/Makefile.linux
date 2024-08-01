@@ -177,6 +177,14 @@ INC_SDL = \
 INC=$(INC_BASE) $(INC_SDL) config.h
 SRC=$(SRC_BASE) $(SRC_SDL)
 
+OBJ:=$(SRC:.cpp=.o)
+OBJ:=$(OBJ:.c=.o)
+
+PKGLIBS=glib-2.0 sdl SDL_image SDL_mixer libpng
+INCDIR=-Icave/ -Icave/helper/ -Icave/object/ -Ifileops/ \
+	-Iframework/ -Igfx/ -Iinput/ -Imisc/ -Isdl/ -Isound/ \
+	-I../include -I. $(shell pkg-config --cflags $(PKGLIBS))
+
 datadir = /usr/local/share
 localedir = $(datadir)/locale
 pkgdatadir = $(datadir)/gdash
@@ -184,8 +192,11 @@ DEFS = -DLOCALEDIR=\"$(localedir)\" -DPKGDATADIR=\"$(pkgdatadir)\"
 
 all: $(PROJECT)
 
-$(PROJECT): $(INC) $(SRC)
-	g++ -o $(PROJECT) $(addprefix -I,$(dir $(INC))) -I../include $(DEFS) $(SRC) `pkg-config --cflags --libs glib-2.0 sdl SDL_image SDL_mixer libpng`
+$(PROJECT): $(INC) $(OBJ)
+	g++ -o $(PROJECT) $(OBJ) $(shell pkg-config --libs $(PKGLIBS))
+
+%.o: %.cpp $(INC)
+	g++ -c -o $@ $(INCDIR) $(DEFS) $<
 
 clean:
-	rm -rf gdash
+	rm -rf gdash $(OBJ)
