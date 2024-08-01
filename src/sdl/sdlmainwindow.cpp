@@ -39,10 +39,6 @@
 
 #include "sdl/sdlmainwindow.hpp"
 
-// OPENGL
-#include "sdl/ogl.hpp"
-
-
 
 class SDLApp: public App {
 public:
@@ -263,12 +259,10 @@ static void run_the_app(App &the_app, NextAction &na) {
 
 
 void gd_main_window_sdl_run(CaveSet *caveset, NextAction &na, bool opengl) {
+	(void)opengl;
     SDLPixbufFactory pf;
     Screen *screen;
-    if (opengl)
-        screen = new SDLNewOGLScreen(pf);
-    else
-        screen = new SDLScreen(pf);
+	screen = new SDLScreen(pf);
 
     {
         SDLApp the_app(*screen);
@@ -290,12 +284,10 @@ void gd_main_window_sdl_run(CaveSet *caveset, NextAction &na, bool opengl) {
 
 
 void gd_main_window_sdl_run_a_game(GameControl *game, bool opengl) {
+	(void)opengl;
     SDLPixbufFactory pf;
     Screen *screen;
-    if (opengl)
-        screen = new SDLNewOGLScreen(pf);
-    else
-        screen = new SDLScreen(pf);
+	screen = new SDLScreen(pf);
 
     {
         SDLApp the_app(*screen);

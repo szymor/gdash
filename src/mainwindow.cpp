@@ -23,7 +23,6 @@
 
 #include <glib.h>
 
-#include "gtk/gtkmainwindow.hpp"
 #include "sdl/sdlmainwindow.hpp"
 #include "misc/logger.hpp"
 #include "misc/printf.hpp"
