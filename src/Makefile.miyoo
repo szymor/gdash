@@ -183,7 +183,7 @@ OBJ:=$(OBJ:.c=.o)
 PKGLIBS=glib-2.0 sdl SDL_image SDL_mixer libpng
 INCDIR=-Icave/ -Icave/helper/ -Icave/object/ -Ifileops/ \
 	-Iframework/ -Igfx/ -Iinput/ -Imisc/ -Isdl/ -Isound/ \
-	-I../include -I. $(shell pkg-config --cflags $(PKGLIBS))
+	-I../include -I. $(shell `arm-linux-g++ --print-sysroot`/../../bin/pkg-config --cflags $(PKGLIBS))
 
 datadir = /usr/local/share
 localedir = $(datadir)/locale
@@ -193,13 +193,13 @@ DEFS = -DLOCALEDIR=\"$(localedir)\" -DPKGDATADIR=\"$(pkgdatadir)\"
 all: $(PROJECT)
 
 $(PROJECT): $(INC) $(OBJ)
-	g++ -o $(PROJECT) $(OBJ) $(shell pkg-config --libs $(PKGLIBS))
+	arm-linux-g++ -o $(PROJECT) $(OBJ) $(shell `arm-linux-g++ --print-sysroot`/../../bin/pkg-config --libs $(PKGLIBS))
 
 %.o: %.cpp $(INC)
-	g++ -c -o $@ $(INCDIR) $(DEFS) $<
+	arm-linux-g++ -c -o $@ $(INCDIR) $(DEFS) $<
 
 %.o: %.c $(INC)
-	gcc -c -o $@ $(INCDIR) $(DEFS) $<
+	arm-linux-gcc -c -o $@ $(INCDIR) $(DEFS) $<
 
 clean:
 	rm -rf gdash $(OBJ)
